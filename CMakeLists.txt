@@ -1,12 +1,24 @@
 cmake_minimum_required(VERSION 3.10)
-project(tanks)
+cmake_policy(SET CMP0072 NEW)
 
-add_subdirectory(external/glfw)
+set(PROJECT_NAME tanks)
+project(${PROJECT_NAME})
 
-add_executable(tanks src/main.cpp)
-
-target_link_libraries(tanks glfw)
-
+# 🔹 Find packages
 find_package(OpenGL REQUIRED)
 
-target_link_libraries(tanks OpenGL::GL)
+# 🔹 Add external dependencies
+add_subdirectory(external/glfw)
+add_subdirectory(external/glad)
+
+# 🔹 Include necessary directories (fixes IntelliSense errors)
+include_directories(external/glfw/include)
+include_directories(external/glad/include)
+
+# 🔹 Create the executable
+add_executable(${PROJECT_NAME} src/main.cpp)
+
+# 🔹 Link libraries to the executable
+target_link_libraries(${PROJECT_NAME} glfw)
+target_link_libraries(${PROJECT_NAME} OpenGL::GL)
+target_link_libraries(${PROJECT_NAME} glad)

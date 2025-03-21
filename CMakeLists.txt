@@ -11,12 +11,24 @@ find_package(OpenGL REQUIRED)
 add_subdirectory(external/glfw)
 add_subdirectory(external/glad)
 
-# 🔹 Include necessary directories (fixes IntelliSense errors)
-include_directories(external/glfw/include)
-include_directories(external/glad/include)
+# 🔹 Include necessary directories
+include_directories(
+    external/glfw/include
+    external/glad/include
+)
+include_directories(
+    src/core
+    src/renderer
+    src/utils
+)
 
 # 🔹 Create the executable
-add_executable(${PROJECT_NAME} src/main.cpp)
+add_executable(${PROJECT_NAME} src/main.cpp
+    src/core/Window.cpp
+    src/core/Application.cpp
+    src/renderer/Renderer.cpp
+    src/utils/Logger.cpp
+)
 
 # 🔹 Link libraries to the executable
 target_link_libraries(${PROJECT_NAME} glfw)
